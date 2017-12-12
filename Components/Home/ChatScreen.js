@@ -8,35 +8,117 @@ import {
   StyleSheet,
   Platform
 } from "react-native";
+import { Camera, Permissions } from "expo";
+
 // import PropTypes from 'prop-types';
-import { Button, Container } from "native-base";
+import {
+  Container,
+  Badge,
+  Header,
+  Left,
+  Body,
+  Right,
+  Button,
+  Icon,
+  Footer,
+  FooterTab,
+  Title
+} from "native-base";
 // import KeyboardSpacer from 'react-native-keyboard-spacer'
 import MessageBubble from "../Chat/MessageBubble";
 // var backgroundImage = require('../../assets/HomeScreen/home_background_img.jpg')
 //
-// let scrollHeight
-// let scrollWindow
-// let apiPollIntervalId
+let scrollHeight;
+let scrollWindow;
+let apiPollIntervalId;
 
 class ChatScreen extends Component {
-  // static navigationOptions = {
-  //   header: null
-  // }
-  state = {
-    messages: []
+  static navigationOptions = {
+    header: null
   }
+  // static navigationOptions = ({ navigation }) => {
+  //   const { state, setParams } = navigation;
+  //   // const isInfo = state.params.mode === "info";
+  //   // const { user } = state.params;
+  //   return {
+  //     // title: isInfo
+  //     //   ? `${user}'s Contact Info`
+  //     //   : `Chat with ${state.params.user}`,
+  //     // title: 'The real one',
+  //     // headerRight: (
+  //     //   <Button
+  //     //     title="Camera"
+  //     //     onPress={() => {
+  //     //       navigation.navigate("CameraScreen", {});
+  //     //       // setParams({ mode: isInfo ? "none" : "info" })
+  //     //     }}
+  //     //   ><Text>Click</Text></Button>
+  //     // )
+  //   };
+  // };
+
+  // state = {
+  //   hasCameraPermission: null,
+  //   type: Camera.Constants.Type.back
+  // };
+
+  // async componentWillMount() {
+  //   const { status } = await Permissions.askAsync(Permissions.CAMERA);
+  //   this.setState({ hasCameraPermission: status === "granted" });
+  // }
 
   render() {
-    var msgs = this.state.messages || this.props.messages || []
-    const bubbles = msgs.map((m, i) => <MessageBubble {...m} key={i} />)
+    // var msgs = this.state.messages || this.props.messages || []
+    const messages = [
+      { isOwnMessage: false, message: "Hi, How is it working" },
+      { isOwnMessage: true, message: "second, How is it working" },
+      { isOwnMessage: true, message: "third, How is it working" }
+    ];
+
+    const bubbles = messages.map((m, i) => <MessageBubble {...m} key={i} />);
 
     return (
-      <View behavior="padding" style={styles.container}>
-        <Text style={styles.title}>ChatScreen</Text>
-        <ScrollView>
-          {bubbles}
+      <Container behavior="padding" style={styles.container}>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name="arrow-back" onPress={() => {
+                this.props.navigation.navigate("SignInScreen", {})
+              }} />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Header</Title>
+          </Body>
+          <Right>
+            <Icon name="camera" onPress={() => {
+              this.props.navigation.navigate("CameraScreen", {})
+            }} />
 
-          <View style={styles.messageBoxContainer}>
+          </Right>
+        </Header>
+        <Body>
+          <Title>Body</Title>
+        </Body>
+        <ScrollView
+          style={styles.bubbleContainer}
+          ref={scrollView => {
+            scrollWindow = scrollView;
+          }}
+          onLayout={event => {
+            scrollHeight = event.nativeEvent.layout.height;
+          }}
+          onContentSizeChange={(width, height) => {
+            if (scrollHeight < height)
+              scrollWindow.scrollTo({ y: height - scrollHeight });
+          }}
+        >
+          {bubbles}
+        </ScrollView>
+
+        <Footer>
+          <FooterTab>
+            {/* <View style={styles.messageBoxContainer}> */}
             <TextInput
               value={this.props.composingMessage}
               onChangeText={this.props.onComposeMessageUpdate}
@@ -47,52 +129,13 @@ class ChatScreen extends Component {
             <TouchableOpacity onPress={this.props.onSendMessage}>
               <Text style={styles.sendButton}>Send</Text>
             </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-
-      // 	<ScrollView
-      //     style={styles.bubbleContainer}
-      //   //   ref={(scrollView) => { scrollWindow = scrollView }}
-      //   //   onLayout={event => {
-      // 	//   scrollHeight = event.nativeEvent.layout.height
-      //   //   }}
-      //   //   onContentSizeChange={(width, height) => {
-      // 	// if (scrollHeight < height) scrollWindow.scrollTo({ y: hei-scrollHeight })
-      //   // }}
-      //   >
-      // {bubbles}
-      //   </ScrollView>
-      //
-      //   <View style={styles.messageBoxContainer}>
-      //    <TextInput
-      // 	// value={this.props.composingMessage}
-      // 	// onChangeText={this.props.onComposeMessageUpdate}
-      // 	// onSubmitEditing={this.props.onSendMessage}
-      // 	returnKeyType="send"
-      // 	style={styles.messageBox}
-      // 				/>
-      //   <TouchableOpacity
-      //     // onPress={this.props.onSendMessage}
-      //     >
-      // 		<Text style={styles.sendButton}>Send</Text>
-      //   </TouchableOpacity>
-      // </View>
-      //
-      // {spacer}
-      // </View>
+            {/* </View> */}
+          </FooterTab>
+        </Footer>
+      </Container>
     );
   }
 }
-
-//
-// ChatScreen.propTypes = {
-// 	messages: PropTypes.array.isRequired,
-// 	composingMessage: PropTypes.string,
-// 	onComposeMessageUpdate: PropTypes.func.isRequired,
-// 	onSendMessage: PropTypes.func.isRequired,
-// 	onReceivedMessage: PropTypes.func.isRequired,
-// }
 
 const styles = StyleSheet.create({
   ChatScreenView: {

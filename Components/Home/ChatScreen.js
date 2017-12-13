@@ -1,28 +1,10 @@
 import React, { Component } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Platform
+import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Platform
 } from "react-native";
 import { Camera, Permissions } from "expo";
 
 // import PropTypes from 'prop-types';
-import {
-  Container,
-  Badge,
-  Header,
-  Left,
-  Body,
-  Right,
-  Button,
-  Icon,
-  Footer,
-  FooterTab,
-  Title
+import { Container, Badge, Header, headerRight, Left, Body, Right, Button, Icon, Footer, FooterTab, Title
 } from "native-base";
 // import KeyboardSpacer from 'react-native-keyboard-spacer'
 import MessageBubble from "../Chat/MessageBubble";
@@ -32,93 +14,52 @@ let scrollHeight;
 let scrollWindow;
 let apiPollIntervalId;
 
-class ChatScreen extends Component {
+export default class ChatScreen extends Component {
   static navigationOptions = {
-    header: null
+    title: 'CHAT',
+    headerRight: <Button title="Camera" />
   }
-  // static navigationOptions = ({ navigation }) => {
-  //   const { state, setParams } = navigation;
-  //   // const isInfo = state.params.mode === "info";
-  //   // const { user } = state.params;
-  //   return {
-  //     // title: isInfo
-  //     //   ? `${user}'s Contact Info`
-  //     //   : `Chat with ${state.params.user}`,
-  //     // title: 'The real one',
-  //     // headerRight: (
-  //     //   <Button
-  //     //     title="Camera"
-  //     //     onPress={() => {
-  //     //       navigation.navigate("CameraScreen", {});
-  //     //       // setParams({ mode: isInfo ? "none" : "info" })
-  //     //     }}
-  //     //   ><Text>Click</Text></Button>
-  //     // )
-  //   };
-  // };
-
-  // state = {
-  //   hasCameraPermission: null,
-  //   type: Camera.Constants.Type.back
-  // };
-
-  // async componentWillMount() {
-  //   const { status } = await Permissions.askAsync(Permissions.CAMERA);
-  //   this.setState({ hasCameraPermission: status === "granted" });
-  // }
 
   render() {
     // var msgs = this.state.messages || this.props.messages || []
     const messages = [
-      { isOwnMessage: false, message: "Hi, How is it working" },
-      { isOwnMessage: true, message: "second, How is it working" },
-      { isOwnMessage: true, message: "third, How is it working" }
+      { isOwnMessage: false, message: 'Hi, I\'m Alice with AwesomeCo support! How can I help you today?' },
+      { isOwnMessage: true, message: 'My wifi is very slow and sometimes I\'m unable to connect to it.' },
+      { isOwnMessage: false, message: 'I\'m sorry to hear that. Lets see how we can fix that.' },
+      { isOwnMessage: false, message: 'Can you provide me some more details about the situation?' },
+      { isOwnMessage: true, message: 'The wifi receiver light is red.' },
+      { isOwnMessage: false, message: 'Sure, we can fix that.' },
+      { isOwnMessage: true, message: 'Cool, it\'s working now' },
+      { isOwnMessage: false, message: 'Anything else I can help you with?' },
+      { isOwnMessage: true, message: 'No, thank you' }
     ];
+
 
     const bubbles = messages.map((m, i) => <MessageBubble {...m} key={i} />);
 
     return (
       <Container behavior="padding" style={styles.container}>
-        <Header>
-          <Left>
-            <Button transparent>
-              <Icon name="arrow-back" onPress={() => {
-                this.props.navigation.navigate("SignInScreen", {})
-              }} />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Header</Title>
-          </Body>
-          <Right>
-            <Icon name="camera" onPress={() => {
-              this.props.navigation.navigate("CameraScreen", {})
-            }} />
-
-          </Right>
-        </Header>
         <Body>
-          <Title>Body</Title>
-        </Body>
-        <ScrollView
-          style={styles.bubbleContainer}
-          ref={scrollView => {
-            scrollWindow = scrollView;
-          }}
-          onLayout={event => {
-            scrollHeight = event.nativeEvent.layout.height;
-          }}
-          onContentSizeChange={(width, height) => {
-            if (scrollHeight < height)
-              scrollWindow.scrollTo({ y: height - scrollHeight });
-          }}
-        >
-          {bubbles}
-        </ScrollView>
+          <ScrollView
+            style={styles.bubbleContainer}
+            ref={scrollView => {
+              scrollWindow = scrollView;
+            }}
+            onLayout={event => {
+              scrollHeight = event.nativeEvent.layout.height;
+            }}
+            onContentSizeChange={(width, height) => {
+              if (scrollHeight < height)
+                scrollWindow.scrollTo({ y: height - scrollHeight });
+            }}
+          >
+            {bubbles}
+          </ScrollView>
 
+        </Body>
         <Footer>
           <FooterTab>
-            {/* <View style={styles.messageBoxContainer}> */}
+
             <TextInput
               value={this.props.composingMessage}
               onChangeText={this.props.onComposeMessageUpdate}
@@ -129,7 +70,7 @@ class ChatScreen extends Component {
             <TouchableOpacity onPress={this.props.onSendMessage}>
               <Text style={styles.sendButton}>Send</Text>
             </TouchableOpacity>
-            {/* </View> */}
+            {/* <KeyboardSpacer /> */}
           </FooterTab>
         </Footer>
       </Container>
@@ -149,7 +90,9 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   bubbleContainer: {
-    flex: 1
+    flex: 1,
+    width: 375
+
   },
   messageBoxContainer: {
     flexDirection: "row",
@@ -167,15 +110,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#dddddd",
     backgroundColor: "#ffffff",
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
+    marginTop: 5,
+    marginLeft: 5
   },
   sendButton: {
     color: "blue",
+    marginTop: 15,
     marginLeft: 10,
     marginRight: 5,
     fontSize: 16,
-    fontWeight: "500"
+    // fontWeight: "500",
+    fontWeight: 'bold',
   }
 });
-
-export default ChatScreen;

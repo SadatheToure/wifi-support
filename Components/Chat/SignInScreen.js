@@ -1,35 +1,37 @@
 import React, { Component } from "react";
-import  { View, Text, StyleSheet, Linking } from "react-native";
-import  { Button, Container, Item, Input, Content } from "native-base";
-// import  { Footer, FooterTab, Button, Icon } from "native-base";
-// import  { TabNavigator } from 'react-navigation';
-// import SearchTab from './TabNavigator/SearchTab';
-// import FavouritesTab from './TabNavigator/FavouritesTab';
+import  { View, Text, StyleSheet, Linking, Image } from "react-native";
+import  { Body, Button, Container, Content, Header, Item, Icon, Input, Left, Title, Right } from "native-base";
+
+var worldKnectImg = require('../../assets/worldKnect.png')
 
 class SignInScreen extends Component {
+  static navigationOptions = {
+  title: 'SIGN IN',
+  };
   render() {
     return (
         <Container style={styles.SignInScreenView}>
-          <Text> AccountScreen </Text>
-          {/* <View style={styles.viewStyle}>
-            <Image source={backgroundImage} style={{flex: 1, height: null, width: null}}/>
-          </View>*/}
+          <View style={styles.imageViewStyle}>
+              <Image source={worldKnectImg} style={{flex: 2, height: 200, width: 400}}/>
+          </View>
 
-          <Item style={styles.inputText}
+          <View style={styles.signInViewStyle}>
+           <Item style={styles.inputText}
             rounded>
-           <Input placeholder='My Name:'/>
+           <Input placeholder=' Name:'/>
           </Item>
 
-          <Item style={styles.inputText}
+          <Item style={styles.inputText2}
             rounded>
-           <Input placeholder='My Account Number:'/>
+           <Input placeholder=' Account Number:'
+             keyboardType="numeric"
+           />
           </Item>
-
 
           <Button style={styles.chatButton}
             block={true}
             onPress={() => this.props.navigation.navigate('ChatScreen')}>
-            <Text style={{ color: 'white'}}> Chat </Text>
+            <Text style={{ color: 'white', fontWeight: 'bold'}}> GO </Text>
           </Button>
 
           <Text
@@ -38,7 +40,7 @@ class SignInScreen extends Component {
           >
             Forgot your account number?
           </Text>
-
+          </View>
         </Container>
     );
   }
@@ -48,20 +50,41 @@ function openHelpPage() {
 	Linking.openURL('https://www.google.com/')
 }
 
-
 const styles = StyleSheet.create({
   SignInScreenView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(26, 188, 156,1.0)',
+  },
+  imageViewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  signInViewStyle: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   chatButton: {
     marginTop: 20,
+    marginLeft: 80,
+    marginRight: 80,
+  },
+  inputText: {
+    marginBottom: 20,
     marginLeft: 30,
     marginRight: 30,
   },
-  inputText: {
+  inputText2: {
     marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  SignInText: {
+    fontSize: 30,
+    marginBottom: 50,
     marginLeft: 30,
     marginRight: 30,
   },
@@ -70,7 +93,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textDecorationLine: 'underline',
     alignSelf: 'flex-start',
-    marginTop: 10,
+    marginTop: 20,
     marginLeft: 30,
     marginBottom: 10,
 },

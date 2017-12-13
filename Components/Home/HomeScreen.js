@@ -1,27 +1,18 @@
 import React, { Component } from "react";
-import  {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity
+import  { View, Text, StyleSheet, Image, TouchableOpacity
 } from "react-native";
 import  { Button, Container } from "native-base";
-// var backgroundImage = require('../../assets/HomeScreen/home_background_img.jpg')
+var worldKnectImg = require('../../assets/worldKnect.png')
 
-class HomeScreen extends Component{
-  // static navigationOptions = {
-  //   header: null
-  // }
+export default class HomeScreen extends Component{
+  static navigationOptions = {
+     title: 'Welcome',
+  }
   render() {
     return (
-      //   {/* <View style={styles.viewStyle}>
-      //     <Image source={backgroundImage} style={{flex: 1, height: null, width: null}}/>
-      //   </View>*/}
-      <View style={styles.container}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Wifi Analyser</Text>
-            <Text style={styles.title2}>Support</Text>
+      <Container style={styles.container}>
+          <View style={styles.imageViewStyle}>
+            <Image source={worldKnectImg} style={{flex: 2, height: 200, width: 400}}/>
           </View>
 
           <View style={styles.buttonContainer}>
@@ -30,7 +21,7 @@ class HomeScreen extends Component{
               <Text style={styles.buttonText}>Get Help</Text>
             </TouchableOpacity>
           </View>
-      </View>
+      </Container>
     );
   }
 }
@@ -40,32 +31,25 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		alignItems: 'center',
-		justifyContent: 'space-around',
-		backgroundColor: '#36c4c0',
+		justifyContent: 'center',
+		backgroundColor: 'rgba(26, 188, 156,1.0)',
 	},
-	titleContainer: {
+  imageViewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+	buttonContainer: {
 		flex: 1,
 		justifyContent: 'center',
-	},
-	title: {
-		fontSize: 30,
-		fontWeight: 'bold',
-	},
-	title2: {
-		fontSize: 30,
-		fontWeight: 'bold',
-    textAlign: 'center',
-	},
-	buttonContainer: {
-		flex: 2,
-		justifyContent: 'center',
+    marginBottom: 70,
 	},
 	button: {
 		width: 200,
 		height: 200,
 		justifyContent: 'center',
 		borderRadius: 150,
-		borderWidth: 10,
+		borderWidth: 15,
 		borderColor: '#8e3429',
 		backgroundColor: '#cb3b27',
 		padding: 30,
@@ -83,5 +67,3 @@ const styles = StyleSheet.create({
 		backgroundColor: 'rgba(0,0,0,0)',
 	},
 })
-
-export default HomeScreen;

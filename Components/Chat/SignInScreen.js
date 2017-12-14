@@ -47,7 +47,7 @@ class SignInScreen extends Component {
 }
 
 function openHelpPage() {
-	Linking.openURL('https://www.google.com/')
+	Linking.openURL('https://wifianalizer.ml/')
 }
 
 const styles = StyleSheet.create({

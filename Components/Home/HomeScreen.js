@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import  { View, Text, StyleSheet, Image, TouchableOpacity
 } from "react-native";
 import  { Button, Container } from "native-base";
+
 var worldKnectImg = require('../../assets/worldKnect.png')
+var helpImg = require('../../assets/help.png')
 
 export default class HomeScreen extends Component{
   static navigationOptions = {
@@ -36,6 +38,14 @@ const styles = StyleSheet.create({
 	},
   imageViewStyle: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  imageBtn: {
+    flex: 2,
+    width: 300,
+    height: 300,
+    marginRight: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },

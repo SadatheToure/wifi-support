@@ -70,7 +70,7 @@ class CameraScreen extends React.Component {
                 }}>
                 <Text
                   style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                  {' '}Flip{' '}
+                  {'  '}Flip{' '}
                 </Text>
               </TouchableOpacity>
             </View>

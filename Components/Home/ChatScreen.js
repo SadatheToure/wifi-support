@@ -6,7 +6,7 @@ import { Camera, Permissions } from "expo";
 // import PropTypes from 'prop-types';
 import { Container, Badge, Header, headerRight, Left, Body, Right, Button, Icon, Footer, FooterTab, Title
 } from "native-base";
-// import KeyboardSpacer from 'react-native-keyboard-spacer'
+import KeyboardSpacer from 'react-native-keyboard-spacer'
 import MessageBubble from "../Chat/MessageBubble";
 // var backgroundImage = require('../../assets/HomeScreen/home_background_img.jpg')
 //
@@ -14,27 +14,39 @@ let scrollHeight;
 let scrollWindow;
 let apiPollIntervalId;
 
+const messages = [
+  { isOwnMessage: false, message: 'Hi, I\'m Alice with AwesomeCo support! How can I help you today?' },
+  { isOwnMessage: true, message: 'My wifi is very slow and sometimes I\'m unable to connect to it.' },
+  { isOwnMessage: false, message: 'I\'m sorry to hear that. Lets see how we can fix that.' },
+  { isOwnMessage: false, message: 'Can you provide me some more details about the situation?' },
+  { isOwnMessage: true, message: 'The wifi receiver light is red.' },
+  { isOwnMessage: false, message: 'Sure, we can fix that.' },
+  { isOwnMessage: true, message: 'Cool, it\'s working now' },
+  { isOwnMessage: false, message: 'Anything else I can help you with?' },
+  { isOwnMessage: true, message: 'No, thank you' }
+];
+
 export default class ChatScreen extends Component {
   static navigationOptions = {
     title: 'CHAT',
     headerRight: <Button title="Camera" />
   }
 
-  render() {
+  // render() {
+  //   fetchResponses() {
+  //     fetch('http://localhost:8080/messages')
+  //       .then(response => response.json())
+  //       .then(data => {
+  //             console.log(responses);
+  //         if (data && data.message) {
+  //           this.props.onReceivedMessage(data)
+  //         }
+  //       }
+  //     }
+
     // var msgs = this.state.messages || this.props.messages || []
-    const messages = [
-      { isOwnMessage: false, message: 'Hi, I\'m Alice with AwesomeCo support! How can I help you today?' },
-      { isOwnMessage: true, message: 'My wifi is very slow and sometimes I\'m unable to connect to it.' },
-      { isOwnMessage: false, message: 'I\'m sorry to hear that. Lets see how we can fix that.' },
-      { isOwnMessage: false, message: 'Can you provide me some more details about the situation?' },
-      { isOwnMessage: true, message: 'The wifi receiver light is red.' },
-      { isOwnMessage: false, message: 'Sure, we can fix that.' },
-      { isOwnMessage: true, message: 'Cool, it\'s working now' },
-      { isOwnMessage: false, message: 'Anything else I can help you with?' },
-      { isOwnMessage: true, message: 'No, thank you' }
-    ];
 
-
+    render() {
     const bubbles = messages.map((m, i) => <MessageBubble {...m} key={i} />);
 
     return (
@@ -58,21 +70,21 @@ export default class ChatScreen extends Component {
 
         </Body>
         <Footer>
-          <FooterTab>
-
-            <TextInput
-              value={this.props.composingMessage}
-              onChangeText={this.props.onComposeMessageUpdate}
-              onSubmitEditing={this.props.onSendMessage}
-              returnKeyType="send"
-              style={styles.messageBox}
-            />
-            <TouchableOpacity onPress={this.props.onSendMessage}>
-              <Text style={styles.sendButton}>Send</Text>
-            </TouchableOpacity>
-            {/* <KeyboardSpacer /> */}
+          <FooterTab style={styles.messageBoxContainer}>
+              <TextInput
+                value={this.props.composingMessage}
+                onChangeText={this.props.onComposeMessageUpdate}
+                onSubmitEditing={this.props.onSendMessage}
+                returnKeyType="send"
+                style={styles.messageBox}
+              />
+              <TouchableOpacity onPress={this.props.onSendMessage}>
+                <Text style={styles.sendButton}>Send</Text>
+              </TouchableOpacity>
           </FooterTab>
+          <KeyboardSpacer />
         </Footer>
+
       </Container>
     );
   }

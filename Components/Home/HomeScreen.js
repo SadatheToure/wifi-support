@@ -18,9 +18,10 @@ export default class HomeScreen extends Component{
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} block={true}
+            <TouchableOpacity block={true}
                 onPress={() => this.props.navigation.navigate('SignInScreen')}>
-              <Text style={styles.buttonText}>Get Help</Text>
+              {/* <Text style={styles.buttonText}>Get Help</Text> */}
+            <Image source={helpImg} />
             </TouchableOpacity>
           </View>
       </Container>
